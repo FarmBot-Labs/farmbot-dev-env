@@ -34,7 +34,7 @@ if [ "$DISTRO" == "Arch" ]; then
   sudo systemctl start mongodb
 
 elif [ "$DISTRO" == "Ubuntu" ] || [ "$DISTRO" == "Debian" ]; then
-  sudo apt-get install -y $PACKAGES
+  sudo apt-get install -y $PACKAGES || { echo "Installation failed" && exit; }
   sudo systemctl enable mongodb
   sudo systemctl start mongodb
 
@@ -94,8 +94,9 @@ else
   echo "Downloading $ARDUINO_NAME"
   wget http://arduino.cc/download.php?f=/$ARDUINO_NAME.tar.xz -O $ARDUINO_NAME.tar.xz
   echo "Extracting $ARDUINO_NAME"
-  tar -xJf $ARDUINO_NAME.tar.xz
+  tar -xf $ARDUINO_NAME.tar.xz
   rm $ARDUINO_NAME.tar.xz
+  mv * $ARDUINO_NAME
   cd $ARDUINO_NAME
 
   # I don't actually know what this does?
@@ -144,8 +145,8 @@ echo "[NOTE] There is no error checking for this. You will probably need to get 
 cd $TWD
 echo $TWD
 read STARTR
-if [ -z "$STARTR" ] || [ "$STARTR" == "n" ] || [ "$STARTR" == "no" ]; then
-  exit 0;
-else
+if [[ "$STARTR" =~ ^[Yy]$ ]]; then
   ./start_local_server.sh
+else
+  exit 0;
 fi
