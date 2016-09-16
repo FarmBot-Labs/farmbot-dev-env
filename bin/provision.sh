@@ -71,8 +71,6 @@ if [ -d $HOME/.rvm/rubies/ruby-2.3.1/ ]; then
 else  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   curl -sSL https://get.rvm.io | bash -s stable
   source $HOME/.rvm/bin/rvm
-  echo "Adding rvm to bashrc. You may need to change some terminal settings for it to work."
-  echo "source $HOME/.rvm/bin/rvm" >> $HOME/.bashrc
   rvm install ruby 2.3.1
   gem install bundler
 fi
